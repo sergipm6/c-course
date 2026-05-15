@@ -46,24 +46,22 @@ int agregarLibro(Libro *l, int cantidad, char *titulo, char *autor, int añoPubl
 //Mostrar todos los libros
 void mostrarLibros(Libro *l, int cantidad){
    for(int i = 0; i < cantidad; i++){
-    printf("Título: %s\n", l->titulo);
-    printf("Autor: %s\n", l->autor);
-    printf("Año de publicación: %d\n", l->añoPublicacion);
-    printf("Estado: %d\n", l[i].estado == 1 ? "Disponible" : "Prestado");
-    printf("---------------------------------");
+    printf("---------------------------------\n");
+    printf("Título: %s\n", l[i].titulo);
+    printf("Autor: %s\n", l[i].autor);
+    printf("Año de publicación: %d\n", l[i].añoPublicacion);
+    printf("Estado: %s\n", l[i].estado == 1 ? "Disponible" : "Prestado");
+    printf("---------------------------------\n");
 }
 }
 
 //Prestar un libro
-int prestarLibro(Libro *l, char *titulo, int cantidad, int estado){
+void prestarLibro(Libro *l, char *titulo, int cantidad){
 
-    if (l->titulo != titulo){
-        
-    }
 }
 
 //Devolver libro
-int devolverLibro(Libro *l, char *titulo, int cantidad){}
+void devolverLibro(Libro *l, char *titulo, int cantidad){}
 
 //Buscar libros por autor
 void filtrarPorAutor(Libro *l, char *titulo,char *autor){}
@@ -72,7 +70,7 @@ void filtrarPorAutor(Libro *l, char *titulo,char *autor){}
 
 int main(){
     Libro libros[50];
-    int cantidad;
+    int cantidad = 0;
     int respuesta;
 
     //----ENTRAMOS AL PROGRAMA-----
@@ -85,34 +83,77 @@ int main(){
         printf("4. Devolver libro: \n");
         printf("5. Filtrar por autor: \n");
         printf("6. Salir: \n");
-        scanf("%d", respuesta);
+        printf("-------------------------------";)
+        scanf("%d", &respuesta);
 
         switch (respuesta)
         {
-        case 1:
+        case 1:{
             Libro nuevo;
             printf("¿De que libro se trata?\n");
-            scanf(" %[^\n]",nuevo.titulo);
+            scanf(" %[^\n]",&nuevo.titulo);
             printf("¿Quién escribió ese libro?\n");
-            scanf(" %[^\n]",nuevo.autor);
+            scanf(" %[^\n]",&nuevo.autor);
             printf("¿En que año fue publicado ese libro?\n");
-            scanf("%d",nuevo.añoPublicacion);
+            scanf("%d",&nuevo.añoPublicacion);
             nuevo.estado = 1;
             cantidad = agregarLibro(libros, cantidad, nuevo.titulo, nuevo.autor, nuevo.titulo);
             break;
+        }
         case 2:
             mostrarLibros(libros ,cantidad);
             break;
-        case 3:    
+        case 3:{    
             char decision[50];
-            printf("¿Que libro deseas llevarte?");
+            printf("¿Que libro deseas llevarte?\n");
             scanf(" %[^\n]", decision);
-            strcmp((libros->titulo, decision) == 0);
+            for(int i = 0; i < cantidad;i++){
+                if(strcmp(libros[i].titulo, decision) == 0){
+                    if (libros[i].estado == 1)
+                    {
+                        printf("El libro está dispoible. LLevatelo!\n");
+                        libros[i].estado = 0;
+                    }else{
+                        printf("El libro ya está prestado\n"); 
+                }
+            }
+            }
             break;
-        case 4:
+        }
+        case 4:{
+            char decisionDevolver[50];
+            printf("¿Que libro deseas devolver?\n");
+            scanf(" %[^\n]", decisionDevolver);
+            int encontradoDev = 0;
+            for(int i = 0; i < cantidad; i++){
+                if(strcmp(libros[i].titulo, decisionDevolver) == 0){
+                    if (libros[i].estado == 0){
+                        printf("Perfecto! Libro devuelto.\n");
+                        libros[i].estado = 1;
+                        encontradoDev = 1;
+                    } else {
+                        printf("El libro no está prestado.\n");
+                        encontradoDev = 1;
+                    }
+                }
+            }
+            if(!encontradoDev) printf("Libro no encontrado.\n");
             break;
-        case 5:
-            break;    
+        }
+        case 5:{
+        char busqueda[50];
+        printf("¿Que autor estás buscando?\n");
+        scanf(" %[^\n]", busqueda);
+        int encontradoAutor = 0;
+        for (int i = 0; i < cantidad; i++){
+            if(strcmp(libros[i].autor, busqueda) == 0){
+                printf("Tenemos este título: %s de ese autor: %s\n", libros[i].titulo, libros[i].autor);
+                encontradoAutor = 1;
+            }
+        }
+        if(!encontradoAutor) printf("No tenemos libros de ese autor, lo sentimos!\n");
+            break;  
+    }  
         case 6:
             break;
         }

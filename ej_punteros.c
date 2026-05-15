@@ -25,5 +25,19 @@ int main() {
 
     printf("La suma de los números es:  %d + %d  = %d\n", x, y, total);
 
+    int valor = 244;
+    int *ptr = &valor;
+    int *ptrr = &valor;
+
+    printf("Valor de valor = %d\n", valor);
+    printf("Valor de &valor = %p\n", &valor);
+    printf("Valor de *ptr = %d\n", *ptr);
+    printf("Valor de ptr = %p\n", ptr);
+    printf("Valor de &ptr = %p\n", &ptr);
+    printf("Valor de *ptrr = %d\n", *ptrr);
+    printf("Valor de ptrr = %p\n", ptrr);
+    printf("Valor de &ptrr = %p\n", &ptrr);
+
     return 0;
+
 }
